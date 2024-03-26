@@ -13,5 +13,4 @@ const db= new Sequelize('jaapman', 'root', '',{
 
 
 
-
 export default db;
