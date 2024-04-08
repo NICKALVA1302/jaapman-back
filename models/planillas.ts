@@ -29,16 +29,16 @@
             type:DataTypes.INTEGER
         },
         lectura_anterior:{
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         },
         lectura_actual:{
-            type:DataTypes.STRING   
+            type:DataTypes.INTEGER   
         },
         consumo_total:{
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         },
         estado_lectura:{
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         },
         nom_resp_edit:{
             type:DataTypes.STRING

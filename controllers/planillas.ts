@@ -58,7 +58,7 @@ export const getDatosClienteTomaLectura = async (req: Request, res: Response) =>
         // Se realiza la consulta por el id_localidad (usuario) y id_usuario_rol (resp_lectura)
         const usuariosLectura = await db.query(`
         SELECT 
-            rl.id_localidad, rl.id_responsable_lectura, med.codigo, rl.id_usuario_rol,rl.id_estado as estado_resp, 
+            rl.id_localidad, rl.id_responsable_lectura, med.codigo, med.id_estado_medidor, rl.id_usuario_rol,rl.id_estado as estado_resp, 
             pl.lectura_actual, pl.lectura_anterior, pl.consumo_total, pl.observaciones, pl.estado_lectura , pl.nom_resp_edit as editadoPor,
             per.nombre,per.apellido,u.id_usuario
         FROM usuario u
