@@ -27,7 +27,11 @@ import routesMantenimiento from '../routes/mantenimiento'
 //Tarifa
 import routesTarifa from '../routes/tarifa'
 
+//Instalacion
+import routesInstalacion from '../routes/instalacion';
 
+//Reportes
+import routesReporte  from '../routes/reportesClientes';
 
 import db from '../db/connection'; // Importa la conexión Sequelize
 
@@ -96,6 +100,9 @@ class Server {
     //Rutas para rol de cajero
     this.app.use(this.apiPaths.cajero, routesCobroLocalidad)
     this.app.use(this.apiPaths.cajero, routesPago)
+    this.app.use(this.apiPaths.cajero, routesInstalacion)
+    //Reportes
+    this.app.use(this.apiPaths.cajero, routesReporte)
 
      //Material
      this.app.use(this.apiPaths.presidente, routesMateriales)
