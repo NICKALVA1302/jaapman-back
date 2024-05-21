@@ -21,4 +21,4 @@ router.put('/editarInstalacion', editarInstalacionPorNumero);
 // Ruta para eliminar una instalación por su numero
 router.delete('/eliminarInstalacion/:numero', borrarInstalacionPorNumero);
 
-export default router;
+export default router; 

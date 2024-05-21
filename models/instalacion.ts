@@ -33,4 +33,4 @@ const Instalacion = db.define('instalacion',{
  Usuarios.belongsTo(Instalacion, {foreignKey: "id_usuario"})
   */
 
-export default Instalacion;
+export default Instalacion; 

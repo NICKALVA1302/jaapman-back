@@ -146,7 +146,7 @@ export const agregarInstalacion = async (req: Request, res: Response) => {
         console.error('Error al agregar instalación:', error);
         res.status(500).json({ msg: 'Error del servidor al agregar instalación' });
     }
-};
+}; 
 
 //metodo get
 /* export const getInstalacionesPorUsuario = async (req: Request, res: Response) => {
