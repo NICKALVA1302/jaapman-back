@@ -8,9 +8,19 @@ import Medidores from "./medidores";
 import Planillas from "./planillas";
 import { login } from "./login";
 import Instalacion from "./instalacion";
+import Mantenimiento from "./mantenimiento";
 
+// Define una interfaz para el modelo Usuarios
+interface UsuarioInstance extends Model {
+    id_usuario: number;
+    id_persona: number;
+    id_localidad: number;
+    id_medidor: number | null; // El medidor puede ser nulo
+    id_estado: number;
+    id_login: number;
+}
 
-const Usuarios = db.define('usuario', {
+const Usuarios = db.define<UsuarioInstance>('usuario', {
     id_usuario: { 
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -49,11 +59,9 @@ const Usuarios = db.define('usuario', {
     Usuarios.belongsTo(ResponsableLecturas, {foreignKey : "id_usuario"});
     ResponsableLecturas.hasMany(Usuarios,{foreignKey : "id_usuario"});
     
-    Usuarios.belongsTo(Medidores, {foreignKey : "id_medidor"});
+    Usuarios.belongsTo(Medidores, { foreignKey: 'id_medidor' });
     Medidores.hasMany(Usuarios,{foreignKey : "id_medidor"});
-    /* 
-    // En el modelo Usuario
-    Usuarios.hasMany(Planillas, { foreignKey: 'id_usuario' }); */
+
     Planillas.belongsTo(Usuarios, {foreignKey : "id_usuario"});
     Usuarios.hasMany(Planillas,{foreignKey : "id_usuario"});
     
@@ -61,5 +69,7 @@ const Usuarios = db.define('usuario', {
     
 
     Usuarios.hasOne(Instalacion, { foreignKey: 'id_usuario' });
+
+    Usuarios.hasMany(Mantenimiento, { foreignKey: 'id_usuario' }); // Un usuario puede tener muchos mantenimientos
     
     export default Usuarios;

@@ -1,6 +1,6 @@
 import {Sequelize} from 'sequelize'
 
-const db= new Sequelize('jaapman', 'root', '',{
+const db= new Sequelize('jaapmanprueba', 'root', 'admin',{
     host: 'localhost',
     dialect: 'mysql',
     port:3306,
@@ -9,7 +9,6 @@ const db= new Sequelize('jaapman', 'root', '',{
     }
     //logging:false,
 });
-
 
 
 
