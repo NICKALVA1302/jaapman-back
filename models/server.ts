@@ -30,7 +30,11 @@ import routesMulta from '../routes/multas'
 
 //Suspender
 import routesSuspender from '../routes/suspender'
+//Instalacion
+import routesInstalacion from '../routes/instalacion';
 
+//Reportes
+import routesReporte  from '../routes/reportesClientes';
 
 import db from '../db/connection'; // Importa la conexión Sequelize
 
@@ -88,6 +92,31 @@ class Server {
         this.app.use(this.apiPaths.login, routesLocalidad)
         this.app.use(this.apiPaths.login, routesActualizacion)
         this.app.use(this.apiPaths.login, routesRoles)
+    //Rutas para clientes
+
+    //Rutas para rol presidente
+    
+    //Rutas para rol operadores
+    this.app.use(this.apiPaths.operador, planillasRoutes);
+    this.app.use(this.apiPaths.operador, usuario_rolRoutes)
+    this.app.use(this.apiPaths.operador, routesUsuario)
+
+    //Rutas para rol de cajero
+    this.app.use(this.apiPaths.cajero, routesCobroLocalidad)
+    this.app.use(this.apiPaths.cajero, routesPago)
+    this.app.use(this.apiPaths.cajero, routesInstalacion)
+    //Reportes
+    this.app.use(this.apiPaths.cajero, routesReporte)
+
+     //Material
+     this.app.use(this.apiPaths.presidente, routesMateriales)
+     this.app.use(this.apiPaths.presidente, routesEstado)
+
+     //Mantenimiento
+     this.app.use(this.apiPaths.presidente, routesMantenimiento)
+
+     //Tarifa
+     this.app.use(this.apiPaths.presidente, routesTarifa)
 
 
         //Rutas para clientes
