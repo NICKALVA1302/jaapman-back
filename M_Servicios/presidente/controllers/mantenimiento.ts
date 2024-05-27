@@ -1,15 +1,15 @@
 import { Response, Request } from 'express'
-import db from '../db/connection';
-import Mantenimiento from '../models/mantenimiento';
-import Mantenimiento_detalle from '../models/mantenimiento_detalle';
-import Material from '../models/material';
+import db from '../../../db/connection';
+import Mantenimiento from '../../../models/mantenimiento';
+import Mantenimiento_detalle from '../../../models/mantenimiento_detalle';
+import Material from '../../../models/material';
 
 import { Sequelize, literal } from 'sequelize';
-import Tarifa from '../models/tarifa';
-import Personas from '../models/personas';
-import Localidades from '../models/localidades';
-import Usuarios from '../models/usuarios';
-import Medidores from '../models/medidores';
+import Tarifa from '../../../models/tarifa';
+import Personas from '../../../models/personas';
+import Localidades from '../../../models/localidades';
+import Usuarios from '../../../models/usuarios';
+import Medidores from '../../../models/medidores';
 
 
 export const getTarifa = async (req: Request, res: Response) => {
