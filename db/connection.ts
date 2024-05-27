@@ -1,6 +1,7 @@
 import {Sequelize} from 'sequelize'
 
-const db= new Sequelize('jaapmanprueba', 'root', 'admin',{
+//cambiar a jaapman
+const db= new Sequelize('jaapman', 'root', 'admin',{
     host: 'localhost',
     dialect: 'mysql',
     port:3306,

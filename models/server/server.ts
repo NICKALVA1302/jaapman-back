@@ -22,7 +22,7 @@ import routesPago from '../../routes/pagos';
 import routesInstalacion from '../../routes/instalacion';
 
 //Reportes
-import routesReporte from '../../routes/reportesClientes';
+import routesReporteG from '../../routes/reportesG';
 
 
 import db from '../../db/connection'; // Importa la conexión Sequelize
@@ -93,7 +93,7 @@ class Server {
         this.app.use(this.apiPaths.cajero, routesCobroLocalidad)
         this.app.use(this.apiPaths.cajero, routesPago)
         this.app.use(this.apiPaths.cajero, routesInstalacion)
-        this.app.use(this.apiPaths.cajero, routesReporte)
+        this.app.use(this.apiPaths.cajero, routesReporteG)
 
     }
 
