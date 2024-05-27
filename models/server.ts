@@ -31,7 +31,7 @@ import routesTarifa from '../routes/tarifa'
 import routesInstalacion from '../routes/instalacion';
 
 //Reportes
-import routesReporte  from '../routes/reportesClientes';
+import routesReporte  from '../routes/reportesG';
 
 import db from '../db/connection'; // Importa la conexión Sequelize
 
