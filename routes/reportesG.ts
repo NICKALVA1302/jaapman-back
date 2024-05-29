@@ -3,10 +3,9 @@ import {
   obtenerClientesPorLocalidad,
   obtenerClientesSuspendidos,
 } from "../controllers/reportesClientes";
-import { obtenerRecudacionAlcantarillado } from "../controllers/reportesTipoRecudacion";
-
+import { obtenerReporteCarteraVA } from "../controllers/reportesGenerales";
 //aqui va todas las rutas de reportes:
-// en posmant una ruta deberia verse asi:  http://localhost:3000/api/reporte/getclientesSusp
+// en posmant una ruta deberia verse asi:  http://localhost:3000/api/cajero/getclientesSusp
 
 const router = Router();
 
@@ -15,6 +14,7 @@ router.post("/getclientesSusp", obtenerClientesSuspendidos);
 
 // Ruta para obtener datos usuarios por localidad
 router.post("/getclientesLoc", obtenerClientesPorLocalidad);
-router.get("/getrecudacionAlca", obtenerRecudacionAlcantarillado);
+//ruta para obtener datos de cartera vencida anual
+router.post("/getcarteraVA", obtenerReporteCarteraVA);
 
 export default router;

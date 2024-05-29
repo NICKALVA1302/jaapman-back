@@ -1,7 +1,15 @@
 import { Response, Request } from 'express'
-import Material from '../models/material'
-import Estado from '../models/estado';
-import db from '../db/connection';
+import Material from '../../../models/material'
+import Estado from '../../../models/estado';
+import db from '../../../db/connection';
+import Usuarios from '../../../models/usuarios';
+import Personas from '../../../models/personas';
+import Localidades from '../../../models/localidades';
+import Mantenimiento from '../../../models/mantenimiento';
+import Mantenimiento_detalle from '../../../models/mantenimiento_detalle';
+import Tarifa from '../../../models/tarifa';
+import Estado_pago from '../../../models/estado_pago';
+import Medidores from '../../../models/medidores';
 
 
 //Api de todo los Materiales
@@ -145,3 +153,76 @@ export const deleteMaterial = async (req: Request, res: Response) => {
         res.status(500).json({ msg: 'Error interno del servidor' });
     }
 };
+
+export const localidadXUsua = async (req: Request, res: Response) => {
+    
+    const { id_localidad } = req.body;
+
+    try {
+        // Busca los usuarios con la id_localidad especificada
+        const usuarios = await Usuarios.findAll({
+            where: {
+                id_localidad
+            },
+            include: [
+                {
+                    model: Personas, // Nombre correcto del modelo de asociación
+                    attributes: ['nombre', 'apellido', 'cedula', 'direccion']
+                },
+                {
+                    model: Localidades, // Nombre correcto del modelo de asociación
+                    attributes: ['id_localidad', 'nombre']
+                },
+                {
+                    model: Mantenimiento, // Nombre correcto del modelo de asociación
+                    attributes: ['total'],
+                    include: [
+                        {
+                            model: Mantenimiento_detalle,
+                            attributes: ['cantidad', 'subtotal'],
+                            include: [
+                                {
+                                    model: Material,
+                                    attributes: ['nombre', 'precio']
+                                }
+                            ]
+                        },
+                        {
+                            model: Tarifa,
+                            attributes: ['valor']
+                        },
+                        {
+                            model: Estado_pago,
+                            attributes: ['nombre']
+                        }
+                    ]
+                },
+                {
+                    model: Medidores,
+                    attributes: ['codigo'] // Incluir el código del medidor
+                }
+            ]
+        });
+
+        // Mapear y modificar los usuarios
+        const modifiedUsuarios = usuarios.map(usuario => {
+            const medidores = usuario.getDataValue('medidor'); // Acceder a la relación medidor usando getDataValue
+
+            if (!medidores) {
+                // Si no hay medidor asociado, asignar "No asignado"
+                return {
+                    ...usuario.toJSON(),
+                    medidor: { codigo: "No asignado" }
+                };
+            } else {
+                return usuario;
+            }
+        });
+
+        res.status(200).json(modifiedUsuarios);
+    } catch (error) {
+        console.error("Error al obtener los datos:", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+

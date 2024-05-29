@@ -12,9 +12,6 @@ const ResponsableLecturas = db.define('responsable_lectura', {
         autoIncrement: true/* ,
         field: 'id_usuario'  */
     },
-    id_usuario:{
-        type: DataTypes.INTEGER
-    },
     id_usuario_rol:{
         type: DataTypes.INTEGER
     },
@@ -27,12 +24,6 @@ const ResponsableLecturas = db.define('responsable_lectura', {
     id_estado:{
         type:DataTypes.INTEGER
     },
-    nombre_resp_edit:{
-        type:DataTypes.STRING
-    },
-    /* nombre_responsable:{
-        type:DataTypes.STRING
-    }, */
     fecha:{
         type:DataTypes.DATE
     }
