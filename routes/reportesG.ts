@@ -5,7 +5,7 @@ import {
 } from "../controllers/reportesClientes";
 import { obtenerConsumoCliente } from "../controllers/reportesConsumoCliente";
 import { obtenerDeudaPueblo } from "../controllers/reportesDeudaPueblo";
-import { obtenerReporteCarteraVA } from "../controllers/reportesGenerales";
+import { obtenerReporteCarteraVA, obtenerReporteGeneralCarteraVA } from "../controllers/reportesCarteraVA";
 import { obtenerLecturaCliente } from "../controllers/reportesLecturaCliente";
 import { obtenerPagoCliente } from "../controllers/reportesPagoCliente";
 import {
@@ -25,6 +25,9 @@ router.post("/getclientesLoc", obtenerClientesPorLocalidad);
 
 //ruta para obtener datos de cartera vencida anual
 router.post("/getcarteraVA", obtenerReporteCarteraVA);
+
+//ruta para obtener datos generales de Cartera Vencida Anual
+router.post("/getGeneralCarteraVA", obtenerReporteGeneralCarteraVA)
 
 //ruta para obtener datos de Consumos Clientes
 router.post("/getConsumoCliente", obtenerConsumoCliente);
