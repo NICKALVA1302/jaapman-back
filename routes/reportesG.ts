@@ -12,6 +12,7 @@ import {
   obtenerRecudacionAlcantarillado,
   obtenerRecudacionMantenimiento,
 } from "../controllers/reportesTipoRecudacion";
+import { valoresGeneradosXMes } from "../controllers/reportesValoresXMes";
 //aqui va todas las rutas de reportes:
 // en posmant una ruta deberia verse asi:  http://localhost:3000/api/cajero/getclientesSusp
 
@@ -47,4 +48,6 @@ router.get("/getrecudacionAlca", obtenerRecudacionAlcantarillado);
 //ruta para obtener datos Recudacion Por tipo "Alcantarillado"
 router.get("/getrecudacionMante", obtenerRecudacionMantenimiento);
 
+//ruta para obtener valores generados por mes
+router.post("/GeneradosxMes", valoresGeneradosXMes);
 export default router;
