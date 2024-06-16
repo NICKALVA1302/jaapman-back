@@ -3,13 +3,13 @@ import db from "../db/connection";
 
 export const obtenerLecturaCliente = async (req: Request, res: Response) => {
   try {
-    const { cedula, localidad, fecha } = req.body;
+    const { cedula, fecha } = req.body;
     if (!cedula) {
       return res.status(500).json({ error: "La cédula es requerida" });
     }
-    if (!localidad) {
-      return res.status(500).json({ error: "La localidad es requerida" });
-    }
+    // if (!localidad) {
+    //   return res.status(500).json({ error: "La localidad es requerida" });
+    // }
     if (!fecha) {
       return res.status(500).json({ error: "La fecha es requerida" });
     }
@@ -48,10 +48,11 @@ export const obtenerLecturaCliente = async (req: Request, res: Response) => {
             INNER JOIN 
                 estado_pago ON planilla.id_estado_pago = estado_pago.id_estado_pago AND pago.id_estado_pago = estado_pago.id_estado_pago
             WHERE 
-                localidad.nombre = '${localidad}' AND
+                
                 YEAR(responsable_lectura.fecha) = ${fecha} AND
                 persona.cedula = '${cedula}';
             `;
+    // localidad.nombre = '${localidad}' AND
     const [LecturaCliente] = await db.query(query);
     res.json(LecturaCliente);
   } catch (error) {
