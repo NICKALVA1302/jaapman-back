@@ -1,20 +1,24 @@
 import { DataTypes } from "sequelize";
 import db from "../db/connection";
 
-
-const AnioApertura = db.define('anio',{
+const AnioApertura = db.define(
+  "anio",
+  {
     id_anio: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
     id_estado: {
-        type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     descripcion: {
-        type: DataTypes.STRING
-    }
-    
-});
+      type: DataTypes.STRING,
+    },
+  },
+  {
+    timestamps: false,
+  }
+);
 
 export default AnioApertura;
