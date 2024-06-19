@@ -19,12 +19,12 @@ export const obtenerLecturaCliente = async (req: Request, res: Response) => {
             SELECT 
                 DATE_FORMAT(responsable_lectura.fecha, '%M') AS 'Mes',
                 YEAR(responsable_lectura.fecha) AS 'Año', 
-                planilla.lectura_anterior AS 'Lectura Anterior', 
-                planilla.lectura_actual AS 'Lectura Actual', 
+                planilla.lectura_anterior AS 'Anterior', 
+                planilla.lectura_actual AS 'Actual', 
                 planilla.consumo_total AS 'Consumo', 
                 estado_pago.nombre AS 'Estado', 
-                pago.createdAt  AS 'Fecha Abono', 
-                planilla_detalle.deuda_pendiente  AS 'TP COM', 
+                pago.createdAt  AS 'Abono', 
+                planilla_detalle.deuda_pendiente  AS 'COM', 
                 planilla_detalle.total_pago AS 'Valor', 
                 planilla.total_pagar AS 'Saldo'
             FROM 
