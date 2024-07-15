@@ -17,8 +17,8 @@ export const obtenerLecturaCliente = async (req: Request, res: Response) => {
 
     const query = `
             SELECT 
-                DATE_FORMAT(responsable_lectura.fecha, '%M') AS 'Mes',
-                YEAR(responsable_lectura.fecha) AS 'Año', 
+                DATE_FORMAT(planilla.createdAt, '%M') AS 'Mes',
+                YEAR(planilla.createdAt) AS 'Año', 
                 planilla.lectura_anterior AS 'Anterior', 
                 planilla.lectura_actual AS 'Actual', 
                 planilla.consumo_total AS 'Consumo', 
