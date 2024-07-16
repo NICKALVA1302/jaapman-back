@@ -17,6 +17,11 @@ export const obtenerLecturaCliente = async (req: Request, res: Response) => {
 
     const query = `
             SELECT 
+                persona.cedula AS 'PersonaCedula',
+                persona.nombre AS 'PersonaNombre',
+                persona.apellido AS 'PersonaApellido',
+                persona.direccion AS 'PersonaDireccion',
+                persona.telefono AS 'PersonaTelefono',
                 DATE_FORMAT(planilla.createdAt, '%M') AS 'Mes',
                 YEAR(planilla.createdAt) AS 'Año', 
                 planilla.lectura_anterior AS 'Anterior', 
