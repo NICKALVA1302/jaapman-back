@@ -9,10 +9,15 @@ export const obtenerPagoCliente = async (req: Request, res: Response) => {
     }
     const query = `
       SELECT 
-        planilla_detalle.total_pago AS 'Total A Pagar', 
-        tipo_pago.nombre AS 'Tipo de pago',
-        pago.abono_realizado AS 'Abono Realizado',
-        planilla_detalle.deuda_pendiente AS 'Deuda Pendiente', 
+        persona.cedula AS 'PersonaCedula',
+      	persona.nombre AS 'PersonaNombre',
+      	persona.apellido AS 'PersonaApellido',
+      	persona.direccion AS 'PersonaDireccion',
+      	persona.telefono AS 'PersonaTelefono',
+        planilla_detalle.total_pago AS 'Total', 
+        tipo_pago.nombre AS 'Tipo',
+        pago.abono_realizado AS 'Abono',
+        planilla_detalle.deuda_pendiente AS 'Deuda', 
         planilla_detalle.descripcion AS 'Descripcion', 
         estado_pago.nombre AS 'Estado' 
       FROM 
