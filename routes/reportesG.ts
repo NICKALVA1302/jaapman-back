@@ -1,11 +1,14 @@
 import { Router } from "express";
 import {
+  obtenerReporteCarteraVA,
+  obtenerReporteGeneralCarteraVA,
+} from "../controllers/reportesCarteraVA";
+import {
   obtenerClientesPorLocalidad,
   obtenerClientesSuspendidos,
 } from "../controllers/reportesClientes";
 import { obtenerConsumoCliente } from "../controllers/reportesConsumoCliente";
 import { obtenerDeudaPueblo } from "../controllers/reportesDeudaPueblo";
-import { obtenerReporteCarteraVA, obtenerReporteGeneralCarteraVA } from "../controllers/reportesCarteraVA";
 import { obtenerLecturaCliente } from "../controllers/reportesLecturaCliente";
 import { obtenerPagoCliente } from "../controllers/reportesPagoCliente";
 import {
@@ -28,7 +31,7 @@ router.post("/getclientesLoc", obtenerClientesPorLocalidad);
 router.post("/getcarteraVA", obtenerReporteCarteraVA);
 
 //ruta para obtener datos generales de Cartera Vencida Anual
-router.post("/getGeneralCarteraVA", obtenerReporteGeneralCarteraVA)
+router.post("/getGeneralCarteraVA", obtenerReporteGeneralCarteraVA);
 
 //ruta para obtener datos de Consumos Clientes
 router.post("/getConsumoCliente", obtenerConsumoCliente);
@@ -43,10 +46,10 @@ router.post("/getLecturaCliente", obtenerLecturaCliente);
 router.post("/getPagoCliente", obtenerPagoCliente);
 
 //ruta para obtener datos Recudacion Por tipo "Alcantarillado"
-router.get("/getrecudacionAlca", obtenerRecudacionAlcantarillado);
+router.post("/getrecudacionAlca", obtenerRecudacionAlcantarillado);
 
 //ruta para obtener datos Recudacion Por tipo "Alcantarillado"
-router.get("/getrecudacionMante", obtenerRecudacionMantenimiento);
+router.post("/getrecudacionMante", obtenerRecudacionMantenimiento);
 
 //ruta para obtener valores generados por mes
 router.post("/GeneradosxMes", valoresGeneradosXMes);

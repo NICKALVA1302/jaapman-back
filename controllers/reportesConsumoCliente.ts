@@ -12,6 +12,8 @@ export const obtenerConsumoCliente = async (req: Request, res: Response) => {
                             pe.cedula, 
                             pe.nombre, 
                             pe.apellido,
+                            pe.direccion,
+                            pe.telefono,
                             pa.nom_resp_edit, 
                             pa.total_pagar, 
                             pa.observaciones, 
