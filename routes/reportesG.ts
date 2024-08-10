@@ -16,6 +16,7 @@ import {
   obtenerRecudacionMantenimiento,
 } from "../controllers/reportesTipoRecudacion";
 import { valoresGeneradosXMes } from "../controllers/reportesValoresXMes";
+import { obtenerReporteAguaporAnio, obtenerReporteAguaporDia, obtenerReporteAguaporMes } from "../controllers/reportesRecaudacionAgua";
 //aqui va todas las rutas de reportes:
 // en posmant una ruta deberia verse asi:  http://localhost:3000/api/cajero/getclientesSusp
 
@@ -53,4 +54,11 @@ router.post("/getrecudacionMante", obtenerRecudacionMantenimiento);
 
 //ruta para obtener valores generados por mes
 router.post("/GeneradosxMes", valoresGeneradosXMes);
+
+router.post("/recaudacionAguaDia", obtenerReporteAguaporDia);
+
+router.post("/recaudacionAguaMes", obtenerReporteAguaporMes);
+
+router.post("/recaudacionAguaAnio", obtenerReporteAguaporAnio);
+
 export default router;
