@@ -9,11 +9,15 @@ export const valoresGeneradosXMes = async (req: Request, res: Response) => {
         // Consulta SQL preparada para evitar inyecciones SQL y manejar las entradas de manera segura
         const query = `
             SELECT 
-                loc.nombre AS localidad,
-                YEAR(pld.createdAt) AS anio,
-                MONTH(pld.createdAt) AS mes,
+                loc.nombre AS localidad, 
+                YEAR(pld.createdAt) AS anio, 
+                MONTH(pld.createdAt) AS mes, 
                 pld.createdAt AS fecha,
-                CONCAT(per.nombre, ' ', per.apellido) AS cliente,
+                per.cedula AS cedula,
+                CONCAT(per.nombre, ' ', per.apellido) AS cliente, 
+                per.direccion AS direccion,
+                per.telefono AS telefono,
+                per.email AS correo,
                 pld.total_pago AS total,
                 CASE 
                     WHEN pld.id_planilla IS NOT NULL THEN 'Agua'
