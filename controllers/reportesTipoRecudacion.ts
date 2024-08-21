@@ -11,19 +11,19 @@ export const obtenerRecudacionAlcantarillado = async (
       return res.status(500).json({ error: "La localidad es requerida" });
     }
     const query = `
-                SELECT          pe.nombre, 
-                                pe.apellido, 
-                                rl.fecha, 
-                                al.inscrito, 
-                                ta.rango, 
-                                ta.valor
-                FROM          alcantarillado al
-                INNER JOIN    planilla_detalle pd ON al.id_alcantarillado = pd.id_alcantarillado
-                INNER JOIN    planilla pl ON pd.id_planilla = pl.id_planilla
-                INNER JOIN    responsable_lectura rl ON pl.id_responsable_lectura = rl.id_responsable_lectura
-                INNER JOIN    tarifa ta ON al.id_tarifa = ta.id_tarifa
-                INNER JOIN    usuario us ON al.id_usuario = us.id_usuario AND pl.id_usuario = us.id_usuario
-                INNER JOIN    persona pe ON us.id_persona = pe.id_persona
+                  SELECT          
+                                  pe.cedula,
+                                                  pe.nombre, 
+                                                  pe.apellido, 
+                                                  pe.direccion,
+                                                  al.createdAt, 
+                                                  al.inscrito,
+                                                  ep.nombre AS 'Estado'
+                                  FROM          alcantarillado al
+                                  INNER JOIN    usuario us ON al.id_usuario = us.id_usuario 
+                                  INNER JOIN    persona pe ON us.id_persona = pe.id_persona
+                                  INNER JOIN    localidad lo ON us.id_localidad = lo.id_localidad
+                          INNER JOIN    estado_pago ep ON al.id_estado_pago = ep.id_estado_pago
                 WHERE         lo.nombre ='${localidad}'
         `;
     const [RecudacionAlcantarillado] = await db.query(query);
@@ -44,7 +44,9 @@ export const obtenerRecudacionMantenimiento = async (
       return res.status(500).json({ error: "La localidad es requerida" });
     }
     const query = `
-                SELECT      pe.nombre, 
+                SELECT      
+                      pe.cedula,
+                      pe.nombre, 
                       pe.apellido,
                       ma.total,
                       ma.createdAt,

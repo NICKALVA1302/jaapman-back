@@ -26,35 +26,20 @@ export const obtenerLecturaCliente = async (req: Request, res: Response) => {
                 YEAR(planilla.createdAt) AS 'Año', 
                 planilla.lectura_anterior AS 'Anterior', 
                 planilla.lectura_actual AS 'Actual', 
-                planilla.consumo_total AS 'Consumo', 
+                planilla.consumo_total AS 'Consumo',
                 estado_pago.nombre AS 'Estado', 
-                pago.createdAt  AS 'Abono', 
-                planilla_detalle.deuda_pendiente  AS 'COM', 
-                planilla_detalle.total_pago AS 'Valor', 
                 planilla.total_pagar AS 'Saldo'
             FROM 
-                factura 
+                planilla
             INNER JOIN 
-                factura_detalle ON factura.id_factura = factura_detalle.id_factura 
+                usuario ON usuario.id_usuario = planilla.id_usuario
             INNER JOIN 
-                planilla ON factura_detalle.id_planilla = planilla.id_planilla 
+                persona ON persona.id_persona =  usuario.id_persona
             INNER JOIN 
-                planilla_detalle ON planilla.id_planilla = planilla_detalle.id_planilla 
-            INNER JOIN 
-                responsable_lectura ON planilla.id_responsable_lectura = responsable_lectura.id_responsable_lectura 
-            INNER JOIN 
-                usuario ON factura.id_usuario = usuario.id_usuario AND planilla.id_usuario = usuario.id_usuario 
-            INNER JOIN 
-                persona ON usuario.id_persona = persona.id_persona 
-            INNER JOIN 
-                localidad ON usuario.id_localidad = localidad.id_localidad 
-            INNER JOIN 
-                pago ON planilla_detalle.id_planilla_det = pago.id_planilla_det 
-            INNER JOIN 
-                estado_pago ON planilla.id_estado_pago = estado_pago.id_estado_pago AND pago.id_estado_pago = estado_pago.id_estado_pago
+                estado_pago ON estado_pago.id_estado_pago = planilla.id_estado_pago
             WHERE 
                 
-                YEAR(responsable_lectura.fecha) = ${fecha} AND
+                YEAR(planilla.createdAt)  = ${fecha} AND
                 persona.cedula = '${cedula}';
             `;
     // localidad.nombre = '${localidad}' AND
