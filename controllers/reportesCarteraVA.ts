@@ -12,10 +12,10 @@ export const obtenerReporteCarteraVA = async (req: Request, res: Response) => {
                 loc.nombre AS localidad, 
                 YEAR(pld.createdAt) AS anio, 
                 MONTH(pld.createdAt) AS mes, 
-                SUM(CASE WHEN pl.id_descuento IS NOT NULL THEN pld.total_pago ELSE 0 END) AS total_con_descuento, 
-                SUM(CASE WHEN pl.id_descuento IS NULL THEN pld.total_pago ELSE 0 END) AS total_sin_descuento, 
-                SUM(pld.total_pago) AS total_facturado, 
-                SUM(CASE WHEN ep.nombre = 'PENDIENTE' THEN pld.total_pago ELSE 0 END) AS total_por_facturar, 
+                SUM(CASE WHEN pl.id_descuento IS NOT NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_con_descuento, 
+                SUM(CASE WHEN pl.id_descuento IS NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_sin_descuento,
+                SUM(CASE WHEN pld.id_estado = 1 THEN pld.total_pago ELSE 0 END) AS total_facturado,
+                SUM(CASE WHEN ep.id_estado_pago = '2' THEN pld.total_pago ELSE 0 END) AS total_por_facturar,
                 CASE 
                     WHEN pld.id_planilla IS NOT NULL THEN 'Agua' 
                     WHEN pld.id_alcantarillado IS NOT NULL THEN 'Alcantarillado' 
@@ -79,10 +79,10 @@ export const obtenerReporteGeneralCarteraVA = async (req: Request, res: Response
             SELECT 
                 YEAR(pld.createdAt) AS anio, 
                 MONTH(pld.createdAt) AS mes, 
-                SUM(CASE WHEN pl.id_descuento IS NOT NULL THEN pld.total_pago ELSE 0 END) AS total_con_descuento, 
-                SUM(CASE WHEN pl.id_descuento IS NULL THEN pld.total_pago ELSE 0 END) AS total_sin_descuento, 
-                SUM(pld.total_pago) AS total_facturado, 
-                SUM(CASE WHEN ep.nombre = 'PENDIENTE' THEN pld.total_pago ELSE 0 END) AS total_por_facturar, 
+                SUM(CASE WHEN pl.id_descuento IS NOT NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_con_descuento, 
+                SUM(CASE WHEN pl.id_descuento IS NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_sin_descuento,
+                SUM(CASE WHEN pld.id_estado = 1 THEN pld.total_pago ELSE 0 END) AS total_facturado,
+                SUM(CASE WHEN ep.id_estado_pago = '2' THEN pld.total_pago ELSE 0 END) AS total_por_facturar, 
                 CASE 
                     WHEN pld.id_planilla IS NOT NULL THEN 'Agua' 
                     WHEN pld.id_alcantarillado IS NOT NULL THEN 'Alcantarillado' 
