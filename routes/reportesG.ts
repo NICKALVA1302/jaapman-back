@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  obtenerReporteCarteraMensual,
   obtenerReporteCarteraVA,
   obtenerReporteGeneralCarteraVA,
 } from "../controllers/reportesCarteraVA";
@@ -27,6 +28,9 @@ router.post("/getclientesSusp", obtenerClientesSuspendidos);
 
 // Ruta para obtener datos usuarios por localidad
 router.post("/getclientesLoc", obtenerClientesPorLocalidad);
+
+//ruta para obtener datos de cartera vencida mensual
+router.post("/getcarteraMensual", obtenerReporteCarteraMensual);
 
 //ruta para obtener datos de cartera vencida anual
 router.post("/getcarteraVA", obtenerReporteCarteraVA);
