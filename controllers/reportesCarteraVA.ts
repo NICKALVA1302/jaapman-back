@@ -74,11 +74,19 @@ export const obtenerReporteCarteraMensual = async (req: Request, res: Response) 
                 // Caso 2: Todas las localidades, un servicio
                 query = `
                     SELECT
-                        loc.nombre AS localidad,
+                         loc.nombre AS localidad, 
+                        YEAR(pld.createdAt) AS anio, 
+                        MONTH(pld.createdAt) AS mes,  
                         SUM(CASE WHEN pl.id_descuento IS NOT NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_con_descuento, 
                         SUM(CASE WHEN pl.id_descuento IS NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_sin_descuento,
                         SUM(CASE WHEN pld.id_estado = 1 THEN pld.total_pago ELSE 0 END) AS total_facturado,
-                        SUM(CASE WHEN ep.id_estado_pago = '2' THEN pld.total_pago ELSE 0 END) AS total_por_facturar
+                        SUM(CASE WHEN ep.id_estado_pago = '2' THEN pld.total_pago ELSE 0 END) AS total_por_facturar,
+                        CASE 
+                            WHEN pld.id_planilla IS NOT NULL THEN 'Agua' 
+                            WHEN pld.id_alcantarillado IS NOT NULL THEN 'Alcantarillado' 
+                            WHEN pld.id_instalacion IS NOT NULL THEN 'Instalación' 
+                            WHEN pld.id_mantenimiento IS NOT NULL THEN 'Mantenimiento'
+                        END AS tipo_de_servicio
                     FROM 
                         planilla_detalle pld 
                     LEFT JOIN 
@@ -121,7 +129,7 @@ export const obtenerReporteCarteraMensual = async (req: Request, res: Response) 
                             WHEN pld.id_mantenimiento IS NOT NULL THEN 'Mantenimiento'
                         END AS tipo_de_servicio,
                         loc.nombre AS localidad,
-                        DATE(CONVERT_TZ(pld.createdAt, '+00:00', '-05:00')) AS fecha, 
+                        MONTH(pld.createdAt) AS mes,  
                         SUM(CASE WHEN pl.id_descuento IS NOT NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_con_descuento, 
                         SUM(CASE WHEN pl.id_descuento IS NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_sin_descuento,
                         SUM(CASE WHEN pld.id_estado = 1 THEN pld.total_pago ELSE 0 END) AS total_facturado,
@@ -160,6 +168,7 @@ export const obtenerReporteCarteraMensual = async (req: Request, res: Response) 
                             WHEN pld.id_instalacion IS NOT NULL THEN 'Instalación'
                             WHEN pld.id_mantenimiento IS NOT NULL THEN 'Mantenimiento'
                         END AS tipo_de_servicio,
+                        MONTH(pld.createdAt) AS mes,  
                         SUM(CASE WHEN pl.id_descuento IS NOT NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_con_descuento, 
                         SUM(CASE WHEN pl.id_descuento IS NULL AND pld.id_estado != 2 THEN pld.total_pago ELSE 0 END) AS total_sin_descuento,
                         SUM(CASE WHEN pld.id_estado = 1 THEN pld.total_pago ELSE 0 END) AS total_facturado,
@@ -194,6 +203,7 @@ export const obtenerReporteCarteraMensual = async (req: Request, res: Response) 
         console.log('Valor de localidad:', localidad); // Debugging line
         console.log('Tipo de servicio:', tipo_servicio);
         res.json(reporteGeneral);
+        console.log(reporteGeneral);
     } catch (error) {
         console.error('Error al obtener el reporte de cartera mensual:', error);
         return res.status(500).json({ error: 'Error interno del servidor.' });
