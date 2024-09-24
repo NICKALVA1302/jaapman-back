@@ -9,6 +9,7 @@ import Planillas from "./planillas";
 import { login } from "./login";
 import Instalacion from "./instalacion";
 import Mantenimiento from "./mantenimiento";
+import Alcantarillado from "./alcantarillado";
 
 // Define una interfaz para el modelo Usuarios
 interface UsuarioInstance extends Model {
@@ -67,6 +68,7 @@ const Usuarios = db.define<UsuarioInstance>('usuario', {
     
     Usuarios.belongsTo(login, { foreignKey: 'id_login', as: 'userLogin' });
     
+    Usuarios.hasMany(Alcantarillado, { foreignKey: 'id_usuario', as: 'alcantarillado' });
 
     Usuarios.hasOne(Instalacion, { foreignKey: 'id_usuario' });
 

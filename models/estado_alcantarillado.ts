@@ -1,20 +1,18 @@
 import { DataTypes } from "sequelize";
 import db from "../db/connection";
 
-
-const AnioApertura = db.define('anio',{
-    id_anio: {
+const Estado_alcantarillado = db.define('Estado_alcantarillado',{
+    id_estado_al: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    id_estado: {
-        type: DataTypes.INTEGER
-    },
-    descripcion: {
+    estado: {
         type: DataTypes.STRING
     }
-    
+},{
+    tableName: 'estado_alcantarillado',
 });
 
-export default AnioApertura;
+
+export default Estado_alcantarillado;
