@@ -10,7 +10,7 @@ router.get('/listadoUsuario', listadoUsuario);
 //Listado de clientes por localidades
 router.post('/localidadXusuario', localidadXUsuario);
 
-// Define la ruta POST para suspender un usuario
+// Suspender un usuario
 router.post("/suspenderUsuario", suspenderUsuario);
 
 export default router;

@@ -8,6 +8,7 @@ import routesTarifa from './routes/tarifa'
 import routesTomaLecturas from './routes/toma-lectura'
 import routesMulta from './routes/multas'
 import routesSuspender from './routes/suspender'
+import routesInscribir from './routes/inscribir-cliente'
 
 import { Router } from 'express';
 
@@ -34,6 +35,7 @@ router.use(routesTarifa);
 router.use(routesMulta);
 //Suspender
 router.use(routesSuspender);
-
+//Incribir Cliente
+router.use(routesInscribir)
 
 export default router;

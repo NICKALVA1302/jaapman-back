@@ -6,6 +6,23 @@ import Localidades from '../../../models/localidades';
 import Personas from '../../../models/personas';
 import Usuarios from '../../../models/usuarios';
 
+export const obtenerProximoIdMulta= async (req: Request, res: Response) => {
+    try {
+        // Obtener el máximo valor actual de id_multa desde la base de datos
+        const maxId = await Multa.max('id_multa');
+
+        // Si no hay ningún valor de id_multa, establecer el próximo número en 1
+        const proximoId = typeof maxId === 'number' ? maxId + 1 : 1;
+
+        // Enviar el próximo ID de multa como respuesta al cliente
+        res.status(200).json({ proximoId });
+    } catch (error) {
+        // Manejar errores
+        console.error('Error al obtener el próximo ID de multa:', error);
+        res.status(500).json({ error: 'Error al obtener el próximo ID de multa' });
+    }
+};
+
 export const agregarMulta = async (req: Request, res: Response) => {
     try {
         const { id_usuario, valor_multa, observacion } = req.body;

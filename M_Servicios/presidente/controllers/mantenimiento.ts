@@ -79,6 +79,16 @@ export const agregarMantenimiento = async (req: Request, res: Response) => {
     try {
         const { id_usuario, id_tarifa, id_estado_pago, materiales } = req.body;
 
+        // Verificar stock de materiales
+        for (const { id_material, cantidad } of materiales) {
+            const material = await Material.findByPk(id_material);
+            if (!material || material.getDataValue('stock') < cantidad) {
+                return res.status(400).json({
+                    msg: `No hay suficiente stock para el material con id ${id_material}`,
+                });
+            }
+        }
+
         // Obtener el valor de la tarifa (o 0 si id_tarifa es null)
         const valorTarifa = id_tarifa
             ? (await Tarifa.findByPk(id_tarifa))?.getDataValue('valor') || 0
@@ -88,7 +98,7 @@ export const agregarMantenimiento = async (req: Request, res: Response) => {
             id_usuario,
             id_tarifa,
             id_estado_pago,
-            total: 0
+            total: 0,
         });
 
         const id_mantenimiento = result.getDataValue('id_mantenimiento');
@@ -96,13 +106,7 @@ export const agregarMantenimiento = async (req: Request, res: Response) => {
         await db.transaction(async (t) => {
             for (const { id_material, cantidad } of materiales) {
                 const material = await Material.findByPk(id_material);
-
-                if (!material) {
-                    // Manejar el caso donde no se encuentra el material
-                    continue;
-                }
-
-                const precioMaterial = material.getDataValue('precio');
+                const precioMaterial = material!.getDataValue('precio');
                 const subtotal = cantidad * precioMaterial;
 
                 await Mantenimiento_detalle.create({
@@ -121,7 +125,7 @@ export const agregarMantenimiento = async (req: Request, res: Response) => {
                 });
             }
 
-            //Actualizar Mantenimiento
+            // Actualizar Mantenimiento
             await Mantenimiento.update({
                 total: literal(`(SELECT COALESCE(SUM(subtotal), 0) FROM mantenimiento_detalle WHERE id_mantenimiento = ${id_mantenimiento}) + ${valorTarifa}`),
             }, {
@@ -136,3 +140,65 @@ export const agregarMantenimiento = async (req: Request, res: Response) => {
         res.status(500).json({ msg: 'Error del servidor al agregar materiales' });
     }
 };
+
+// export const agregarMantenimiento = async (req: Request, res: Response) => {
+//     try {
+//         const { id_usuario, id_tarifa, id_estado_pago, materiales } = req.body;
+
+//         // Obtener el valor de la tarifa (o 0 si id_tarifa es null)
+//         const valorTarifa = id_tarifa
+//             ? (await Tarifa.findByPk(id_tarifa))?.getDataValue('valor') || 0
+//             : 0;
+
+//         const result = await Mantenimiento.create({
+//             id_usuario,
+//             id_tarifa,
+//             id_estado_pago,
+//             total: 0
+//         });
+
+//         const id_mantenimiento = result.getDataValue('id_mantenimiento');
+
+//         await db.transaction(async (t) => {
+//             for (const { id_material, cantidad } of materiales) {
+//                 const material = await Material.findByPk(id_material);
+
+//                 if (!material) {
+//                     // Manejar el caso donde no se encuentra el material
+//                     continue;
+//                 }
+
+//                 const precioMaterial = material.getDataValue('precio');
+//                 const subtotal = cantidad * precioMaterial;
+
+//                 await Mantenimiento_detalle.create({
+//                     id_mantenimiento,
+//                     id_material,
+//                     cantidad,
+//                     subtotal,
+//                 }, { transaction: t });
+
+//                 // Actualizar el stock del material
+//                 await Material.update({
+//                     stock: literal(`stock - ${cantidad}`),
+//                 }, {
+//                     where: { id_material },
+//                     transaction: t,
+//                 });
+//             }
+
+//             //Actualizar Mantenimiento
+//             await Mantenimiento.update({
+//                 total: literal(`(SELECT COALESCE(SUM(subtotal), 0) FROM mantenimiento_detalle WHERE id_mantenimiento = ${id_mantenimiento}) + ${valorTarifa}`),
+//             }, {
+//                 where: { id_mantenimiento },
+//                 transaction: t,
+//             });
+//         });
+
+//         res.status(201).json({ msg: 'Materiales Vendidos correctamente' });
+//     } catch (error) {
+//         console.error('Error al agregar materiales:', error);
+//         res.status(500).json({ msg: 'Error del servidor al agregar materiales' });
+//     }
+// };
